@@ -1,6 +1,11 @@
 import model.Persona;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -29,8 +34,25 @@ public class Main {
         return listaPersonas;
     }
 
+    public static void personasListToFile(HashMap<Integer, Persona> listaPersonas) throws IOException {
+        String ruta = "listaUsers.txt";
 
-    public static void main(String[] args) {
-        System.out.println(createListaPersonas());
+        BufferedWriter bw=new BufferedWriter(new FileWriter(ruta));
+
+        for (Map.Entry<Integer, Persona> entry : listaPersonas.entrySet()) {
+            bw.write(entry.getKey().toString() + "=" + entry.getValue());
+            bw.newLine();
+        }
+        bw.close();
+        System.out.println(listaPersonas);
+        System.out.println("---------------------------------");
+        System.out.println("Datos del HashMap copiados en el archivo : " + ruta);
+
+
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        personasListToFile(createListaPersonas());
     }
 }
